@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prabakaran — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C0C0E; --surface:#141418; --ink:#F0EFE9; --muted:#5A5A6A; --accent:#E8D5A3; --line:#222228;
+  --dot-color:#1A1A20;
+  --sidebar:160px;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  --bg:#F5F5F2; --surface:#EBEBE8; --ink:#111111; --muted:#888888; --line:#DDDDDA;
+  --dot-color:#E2E2DD; --accent:#9C6B1F;
+  color-scheme:light;
+}
+body,.sidebar,.status,.proj,.stat,nav a,.social a,.gh,.cv-dl,.cv-contact a,.reach a,.cv-more{
+  transition:background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;background-color:var(--bg);color:var(--ink);
+  font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;
+  background-image:radial-gradient(circle,var(--dot-color) 1px,transparent 1.5px);
+  background-size:20px 20px;
+  -webkit-font-smoothing:antialiased;
+}
+.sidebar{
+  position:fixed;top:env(safe-area-inset-top,0px);bottom:calc(36px + env(safe-area-inset-bottom,0px));left:0;
+  width:var(--sidebar);padding:32px 22px;
+  display:flex;flex-direction:column;
+  background:var(--bg);border-right:1px solid var(--line);z-index:10;
+}
+.side-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.04em;color:var(--ink);text-decoration:none}
+.theme-btn{
+  font-family:'DM Mono',monospace;font-size:1.1rem;line-height:1;color:var(--muted);
+  background:none;border:0;padding:8px;margin:-8px;cursor:pointer;transition:color .2s;
+}
+.theme-btn:hover{color:var(--ink)}
+.brand span{color:var(--accent)}
+nav{margin-top:44px;display:flex;flex-direction:column;gap:12px}
+nav a{
+  font-size:.9rem;color:var(--muted);text-decoration:none;
+  transition:color .2s;width:fit-content;
+}
+nav a:hover,nav a.active{color:var(--ink)}
+nav a.active::before{content:"";display:inline-block;width:5px;height:5px;background:var(--accent);border-radius:50%;margin-right:8px;vertical-align:middle}
+.social{margin-top:auto;display:flex;gap:14px;padding-bottom:22px}
+.social a{color:var(--muted);display:flex;transition:color .2s}
+.social a:hover{color:var(--ink)}
+.social svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.social svg.fill{fill:currentColor;stroke:none}
+.clock{border-top:1px solid var(--line);padding-top:14px;font-family:'DM Mono',monospace}
+.clock .t{font-size:.95rem;color:var(--ink);letter-spacing:.02em}
+.clock .l{font-size:.65rem;color:var(--muted);letter-spacing:.12em;margin-top:2px}
+
+main{margin-left:var(--sidebar);padding:0 clamp(28px,6vw,88px) calc(36px + 24px)}
+section{max-width:62ch}
+#home{min-height:calc(100vh - 36px);min-height:calc(100svh - 36px);display:flex;flex-direction:column;justify-content:center;padding:96px 0}
+h1{
+  font-family:'Playfair Display',serif;font-weight:500;
+  font-size:clamp(2.8rem,8vw,4rem);line-height:1.05;letter-spacing:-.01em;margin:0;color:var(--ink);
+}
+.typing{
+  margin-top:28px;font-family:'DM Mono',monospace;font-size:.88rem;
+  color:var(--ink);min-height:1.6em;overflow-wrap:anywhere;
+}
+.typing .k{color:var(--muted)}
+.cursor{
+  display:inline-block;width:.55ch;height:1.05em;background:var(--accent);
+  vertical-align:text-bottom;margin-left:2px;animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+.sub{margin-top:36px;color:var(--muted);max-width:46ch;font-size:.98rem}
+.sub b{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion:reduce){.cursor{animation:none}}
+
+.shelf{
+  margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.stat{padding:22px 0 20px 20px;border-left:1px solid var(--line)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat .n{
+  font-family:'Playfair Display',serif;font-weight:500;font-size:2.2rem;line-height:1.1;
+  color:var(--accent);font-variant-numeric:tabular-nums;
+}
+.stat .l{
+  margin-top:8px;min-height:2.4em;font-family:'DM Mono',monospace;font-size:.7rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.2;
+}
+@media (max-width:640px){
+  .shelf{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(odd){padding-left:0;border-left:0}
+  .stat:nth-child(even){padding-left:20px;border-left:1px solid var(--line)}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+}
+
+.view[hidden],#home[hidden],.status[hidden]{display:none}
+#projects{padding:72px 0 96px}
+.sec-h{font-family:'DM Mono',monospace;font-weight:400;font-size:.78rem;letter-spacing:.12em;color:var(--muted);margin:0 0 8px}
+.grp{margin-top:40px}
+.grp-l{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+.proj{margin:0 -14px;padding:18px 14px;border-bottom:1px solid var(--line);transition:background .2s}
+.grp .proj:last-child{border-bottom:0}
+.proj{background:transparent}
+@media (hover:hover){.proj:hover{background:var(--surface)}}
+.proj-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.proj h3{margin:0;font-family:'DM Sans',sans-serif;font-weight:500;font-size:1.02rem;color:var(--ink)}
+.gh{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .2s}
+.gh:hover{color:var(--ink)}
+.desc{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.tags{margin-top:8px;font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.proof{margin:10px 0 0;font-style:italic;font-size:.88rem;color:var(--accent)}
+
+.status{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  height:calc(36px + env(safe-area-inset-bottom,0px));padding:0 20px env(safe-area-inset-bottom,0px);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
+  background:var(--surface);border-top:1px solid var(--line);
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.03em;color:var(--muted);
+}
+.status .c{text-align:center;white-space:nowrap}
+.status .r{text-align:right}
+.status .l,.status .r{white-space:nowrap}
+
+#about{padding:72px 0 48px}
+#about p.letter{margin:0 0 1.5em;font-size:1.02rem;line-height:1.9;color:var(--ink)}
+.reach{margin-top:40px;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted)}
+.reach a{color:inherit;text-decoration:none;transition:color .2s}
+.reach a:hover{color:var(--ink)}
+
+.log-l{margin-top:48px}
+.timeline{position:relative;margin-top:16px;padding-left:18px}
+.timeline::before{content:"";position:absolute;left:3px;top:4px;bottom:4px;width:1px;background:var(--line)}
+.tl-entry{
+  position:relative;display:flex;align-items:flex-start;gap:14px;padding:10px 0;
+  opacity:0;transform:translateY(8px);transition:transform .25s ease, color .2s ease;
+}
+.tl-entry.in{animation:tl-in .5s ease forwards}
+@keyframes tl-in{to{opacity:1;transform:translateY(0)}}
+.tl-dot{
+  position:absolute;left:-18px;top:11px;font-size:.5rem;line-height:1;color:var(--muted);
+  transition:color .2s ease;
+}
+.tl-entry:hover .tl-dot{color:var(--accent)}
+.tl-entry:hover .tl-body{transform:translateX(4px)}
+.tl-body{transition:transform .2s ease}
+.tl-date{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap;min-width:84px}
+.tl-text{font-size:.9rem;color:var(--ink);line-height:1.5}
+@media (max-width:640px){
+  .tl-entry{flex-direction:column;gap:3px}
+  .tl-date{min-width:0}
+}
+
+#resume{padding:72px 0 48px}
+.cv-name{font-family:'Playfair Display',serif;font-weight:500;font-size:1.8rem;line-height:1.15;margin:0;color:var(--ink)}
+.cv-contact{margin-top:12px;font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted);line-height:1.8;overflow-wrap:anywhere}
+.cv-contact a{color:inherit;text-decoration:none;transition:color .2s}
+.cv-contact a:hover{color:var(--ink)}
+.cv-dl{
+  display:inline-block;margin-top:14px;padding:8px 16px;
+  font-family:'DM Mono',monospace;font-size:.72rem;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;background:transparent;
+  text-decoration:none;transition:background-color .2s ease, color .2s ease;
+}
+.cv-dl:hover{background:color-mix(in srgb, var(--accent) 15%, transparent);color:var(--accent)}
+.cv-sec{margin-top:36px;padding-top:18px;border-top:1px solid var(--line)}
+.cv-l{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--muted);margin-bottom:14px}
+.cv-row{margin-bottom:18px}
+.cv-row:last-child{margin-bottom:0}
+.cv-t{font-weight:500;font-size:.98rem;color:var(--ink)}
+.cv-m{margin-top:2px;font-size:.88rem;color:var(--muted)}
+.cv-m.mono{font-family:'DM Mono',monospace;font-size:.72rem}
+.cv-ul{list-style:none;margin:8px 0 0;padding:0}
+.cv-ul li{position:relative;padding-left:16px;font-size:.9rem;color:var(--ink);line-height:1.6;margin-top:3px}
+.cv-ul li::before{content:"–";position:absolute;left:0;color:var(--muted)}
+.cv-skill{display:grid;grid-template-columns:96px 1fr;gap:4px 12px;margin-bottom:10px}
+.cv-skill:last-child{margin-bottom:0}
+.cv-skill .k{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);padding-top:2px}
+.cv-skill .v{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--ink);line-height:1.7}
+.cv-more{display:inline-block;margin-top:16px;font-size:.85rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.cv-more:hover{color:var(--ink)}
+
+@media (max-width:640px){
+  :root{--sidebar:0px}
+  #resume{padding:40px 0 32px}
+  .cv-skill{grid-template-columns:1fr}
+  .status{grid-template-columns:1fr auto;padding-left:16px;padding-right:16px}
+  .status .c{display:none}
+  #about{padding:40px 0 32px}
+  #projects{padding:40px 0 64px}
+  .sidebar{
+    position:sticky;top:0;bottom:auto;width:100%;height:auto;flex-direction:row;align-items:center;
+    gap:16px;padding:12px 18px;border-right:0;border-bottom:1px solid var(--line);
+    background:rgba(12,12,14,.92);overflow-x:auto;
+  }
+  nav{margin:0 0 0 auto;flex-direction:row;gap:14px}
+  .social,.clock{display:none}
+  .brand{display:none}
+  main{padding:0 22px}
+  #home{min-height:calc(100svh - 86px);padding:56px 0}
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="side-top">
+    <a class="brand" href="#home">prabakaran<span>.</span></a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme">○</button>
+  </div>
+  <nav aria-label="Primary">
+    <a href="#home" class="active">home</a>
+    <a href="#projects">projects</a>
+    <a href="#about">about</a>
+    <a href="#resume">resume</a>
+  </nav>
+  <div class="social">
+    <a href="https://github.com/Prabakaransr19" aria-label="GitHub" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/prabakaransr19/" aria-label="LinkedIn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+    </a>
+    <a href="mailto:prabakaransr198@gmail.com" aria-label="Email">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+    </a>
+  </div>
+  <div class="clock" aria-label="Current time in India">
+    <div class="t js-clock">--:--:--</div>
+    <div class="l">IST · COIMBATORE</div>
+  </div>
+</aside>
+
+<main>
+  <section id="home" class="view">
+    <h1>Prabakaran</h1>
+    <div class="typing" aria-live="off">
+      <span class="k">building:</span> <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
+    </div>
+
+    <div class="shelf">
+      <div class="stat"><div class="n" data-to="10" data-dec="0" data-suffix="+">10+</div><div class="l">Projects Built</div></div>
+      <div class="stat"><div class="n" data-to="8.23" data-dec="2">8.23</div><div class="l">CGPA</div></div>
+      <div class="stat"><div class="n" data-to="3" data-dec="0" data-suffix="×">3×</div><div class="l">Hackathon Winner</div></div>
+      <div class="stat"><div class="n" data-to="44" data-dec="0" data-prefix="#LH">#LH44</div><div class="l"></div></div>
+    </div>
+  </section>
+
+  <section id="projects" class="view" hidden>
+    <h2 class="sec-h">projects</h2>
+    <div class="grp">
+      <div class="grp-l">— ml / ai</div>
+      <article class="proj">
+        <div class="proj-top"><h3>BoxMachiBox</h3><a class="gh" href="https://github.com/Prabakaransr19/BoxMachiBox" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">F1 podium predictor</p>
+        <div class="tags"><span>[Python]</span> <span>[XGBoost]</span> <span>[FastAPI]</span> <span>[Next.js]</span></div>
+        <p class="proof">93.89% accuracy, validated on real 2025 race weekends</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>Neural Network From Scratch</h3><a class="gh" href="https://github.com/Prabakaransr19/NeuralNetworkFromScratch" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">built with zero ML frameworks</p>
+        <div class="tags"><span>[Python]</span> <span>[NumPy]</span> <span>[MNIST]</span></div>
+        <p class="proof">~84% accuracy. Math said hello and never left</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>RAG Chatbot</h3><a class="gh" href="https://github.com/Prabakaransr19/SWS_AI_Drive_Project-RAG-model-" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">document Q&amp;A with per-user session memory</p>
+        <div class="tags"><span>[FastAPI]</span> <span>[LangChain]</span> <span>[ChromaDB]</span> <span>[Gemini]</span></div>
+        <p class="proof">built during SWS AI interview rounds</p>
+      </article>
+    </div>
+    <div class="grp">
+      <div class="grp-l">— full stack &amp; hackathons</div>
+      <article class="proj">
+        <div class="proj-top"><h3>ArtVaani</h3><a class="gh" href="https://github.com/Prabakaransr19/ArtVaani-H2S" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">AI art marketplace, weaving stories into products</p>
+        <div class="tags"><span>[Next.js]</span> <span>[TypeScript]</span> <span>[Firebase]</span> <span>[Gemini]</span></div>
+        <p class="proof">Hack2Skill hackathon — speech-to-text, cultural insight generation</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>LumenGrid</h3><a class="gh" href="https://github.com/Prabakaransr19/lumenGRIDd" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">AI-powered solar journey planner</p>
+        <div class="tags"><span>[Next.js]</span> <span>[React]</span> <span>[Gemini]</span> <span>[Google Maps]</span></div>
+        <p class="proof">same project, two different hackathons. It was that good.</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>MediQ</h3><a class="gh" href="https://github.com/Prabakaransr19/Medi-Q" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">clinic queue and appointment system</p>
+        <div class="tags"><span>[React]</span> <span>[FastAPI]</span> <span>[SQLite]</span> <span>[SSE]</span></div>
+        <p class="proof">URAN 2026 HealthTech track — built in 12 hours, zero external APIs, zero chill</p>
+      </article>
+    </div>
+    <div class="grp">
+      <div class="grp-l">— internship</div>
+      <article class="proj">
+        <div class="proj-top"><h3>HydroFlow</h3><a class="gh" href="https://github.com/Prabakaransr19/HydroFlow" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">Water Consumption Management System</p>
+        <div class="tags"><span>[Java]</span> <span>[Spring Boot]</span> <span>[React]</span> <span>[PostgreSQL]</span></div>
+        <p class="proof">Infosys Springboard internship project — RESTful APIs for consumption tracking, billing logic, and usage dashboards</p>
+      </article>
+    </div>
+    <div class="grp">
+      <div class="grp-l">— personal</div>
+      <article class="proj">
+        <div class="proj-top"><h3>DeCrypto</h3><a class="gh" href="https://github.com/Prabakaransr19/DeCrypto" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">file encryption/decryption tool</p>
+        <div class="tags"><span>[Python]</span> <span>[cryptography]</span> <span>[Fernet/AES]</span></div>
+        <p class="proof">did the hard math so I didn't have to implement AES by hand. Learned that lesson elsewhere.</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>CleanMyKeyboard</h3><a class="gh" href="https://github.com/Prabakaransr19/CleanMyKeyboard" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">fullscreen keyboard cleaner utility</p>
+        <div class="tags"><span>[Python]</span> <span>[tkinter]</span> <span>[pynput]</span> <span>[PyInstaller]</span></div>
+        <p class="proof">packaged into .exe. Solves a problem I actually had.</p>
+      </article>
+    </div>
+    <div class="grp">
+      <div class="grp-l">— learning phase</div>
+      <article class="proj">
+        <div class="proj-top"><h3>Athena's Archive</h3><a class="gh" href="https://github.com/Prabakaransr19/Athena-s-Archive" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">personal library web app</p>
+        <div class="tags"><span>[HTML]</span> <span>[CSS]</span> <span>[JS]</span></div>
+        <p class="proof">&ldquo;undefined is not a function&rdquo; — me, repeatedly</p>
+      </article>
+      <article class="proj">
+        <div class="proj-top"><h3>Weather Application</h3><a class="gh" href="https://github.com/Prabakaransr19/weather_application" target="_blank" rel="noopener">↗ github</a></div>
+        <p class="desc">live weather lookup</p>
+        <div class="tags"><span>[HTML]</span> <span>[CSS]</span> <span>[JS]</span></div>
+        <p class="proof">where it all started</p>
+      </article>
+    </div>
+  </section>
+  <section id="about" class="view" hidden>
+    <h2 class="sec-h">about</h2>
+    <div style="height:32px"></div>
+    <p class="letter">I'm Prabakaran — a 7th semester CSBS student at KPRIET, Coimbatore. I build ML systems, full stack products, and occasionally things that have no business existing. I watch too much F1 and I think chess and debugging share more DNA than people admit.</p>
+    <p class="letter">I'm part of the FOSS and CNCF communities — I'd rather learn in public than collect certificates. My projects have real results attached to them because I find it embarrassing when they don't.</p>
+    <p class="letter">Currently doing a Java full stack internship at Infosys Springboard, finishing my final year projects, and looking for what comes next.</p>
+    <div class="reach">reach me → <a href="mailto:prabakaransr198@gmail.com">prabakaransr198@gmail.com</a></div>
+
+    <div class="cv-l log-l">— log</div>
+    <div class="timeline">
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2026.09</div><div class="tl-text">Built MediQ in 12 hours flat — URAN 2026 hackathon</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2026.07</div><div class="tl-text">Infosys Springboard internship begins</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2026.01</div><div class="tl-text">BoxMachiBox crosses 93.89% — the F1 model finally clicks</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2025.09 to 12</div><div class="tl-text">10+ meetups in one season. Caffeine levels: concerning</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2025.09</div><div class="tl-text">ArtVaani takes 2nd runner-up at CCET Hackfest</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2025.08</div><div class="tl-text">First tech meetup. Didn't know anyone. Stayed anyway</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2025.08</div><div class="tl-text">Team Vantablack forms — first hackathon, zero wins, all lessons</div></div></div>
+      <div class="tl-entry"><span class="tl-dot">●</span><div class="tl-body"><div class="tl-date">2025.04</div><div class="tl-text">Organized hackXelerate'25 — went from attendee to host</div></div></div>
+    </div>
+  </section>
+  <section id="resume" class="view" hidden>
+    <h2 class="cv-name">Prabakaran S R</h2>
+    <div class="cv-contact"><a href="mailto:prabakaransr198@gmail.com">prabakaransr198@gmail.com</a> · <a href="https://linkedin.com/in/prabakaransr19" target="_blank" rel="noopener">linkedin.com/in/prabakaransr19</a> · <a href="https://github.com/prabakaransr19" target="_blank" rel="noopener">github.com/prabakaransr19</a></div>
+    <a class="cv-dl" href="Resume.pdf">↗ download resume</a>
+    <div class="cv-sec">
+      <div class="cv-l">— education</div>
+      <div class="cv-row"><div class="cv-t">KPR Institute of Engineering and Technology</div><div class="cv-m">B.Tech. CSBS (Honours in Cloud Computing) · CGPA 8.23/10 · Sep 2023 – Mar 2027</div></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-l">— experience</div>
+      <div class="cv-row"><div class="cv-t">Infosys Springboard — Java Full Stack Development Intern</div><div class="cv-m mono">Jul 2026 – Present · Remote</div><ul class="cv-ul"><li>Full-stack Water Consumption Management System · Java, Spring Boot, React, PostgreSQL</li><li>RESTful APIs for consumption tracking, billing logic, resident data</li><li>React frontend for usage trends and consumption reports</li></ul></div>
+      <div class="cv-row"><div class="cv-t">Capabl Pvt. Ltd. — Full Stack Web Development Intern</div><div class="cv-m mono">Jan 2025 – Feb 2025 · Remote</div><ul class="cv-ul"><li>Built 2 interactive dashboards for weather and population data · HTML, CSS, JS</li><li>Integrated OpenWeather and Government Census APIs</li></ul></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-l">— projects</div>
+      <div class="cv-row"><div class="cv-t">BoxMachiBox</div><div class="cv-m">Python, XGBoost, FastAPI, React.js · 93.89% accuracy on 47 engineered features</div></div>
+      <div class="cv-row"><div class="cv-t">Neural Network From Scratch</div><div class="cv-m">Python, NumPy, Pandas · 84% accuracy, backprop written manually</div></div>
+      <a class="cv-more" href="#projects" data-goto="projects">↗ see all projects</a>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-l">— skills</div>
+      <div class="cv-skill"><div class="k">Languages</div><div class="v">Java · SQL · Python · JavaScript</div></div>
+      <div class="cv-skill"><div class="k">Frameworks</div><div class="v">Spring Boot · FastAPI · React · TensorFlow · scikit-learn · Pandas · NumPy</div></div>
+      <div class="cv-skill"><div class="k">Tools</div><div class="v">Git · VS Code · IntelliJ · Postman · Vercel · PostgreSQL · Google Colab</div></div>
+      <div class="cv-skill"><div class="k">Core CS</div><div class="v">DSA · DBMS · OOP · Operating Systems</div></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-l">— achievements</div>
+      <div class="cv-row"><div class="cv-t">IEEE Xtreme 18.0 — All India Rank 423</div><div class="cv-m">global 24-hour competitive programming</div></div>
+      <div class="cv-row"><div class="cv-t">ABB EngineeredX — Selected as Global Finalist</div><div class="cv-m">international engineering innovation</div></div>
+      <div class="cv-row"><div class="cv-t">3× inter-collegiate hackathon winner</div></div>
+      <div class="cv-row"><div class="cv-t">Club Coordinator — Youth Parliament, Sangamam Clubhouse</div><div class="cv-m">KPRIET</div></div>
+      <div class="cv-row"><div class="cv-t">Technical Lead — IEEE SSIT</div><div class="cv-m">KPRIET SB</div></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-l">— certifications</div>
+      <div class="cv-row"><div class="cv-t">GitHub Foundations · AWS Certified Cloud Practitioner</div></div>
+      <div class="cv-row"><div class="cv-t">NPTEL — Business Ethics</div><div class="cv-m">Elite + Silver</div></div>
+      <div class="cv-row"><div class="cv-t">HackerRank</div><div class="cv-m">Problem Solving, SQL, Python (Basics)</div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="status">
+  <div class="l js-clock">--:--:--</div>
+  <div class="c">currently → Mozhi + MediQ hackathon</div>
+  <div class="r">Coimbatore, IN</div>
+</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Typing effect
+  try{
+    var phrases=[
+      'Mozhi \u2014 phonetic correction for speech-to-text',
+      'MediQ \u2014 clinic queue system',
+      'BoxMachiBox \u2014 F1 podium predictor'
+    ];
+    var out=document.getElementById('typed');
+    var pi=0,ci=0;
+    var typeNext=function(){
+      var p=phrases[pi];
+      if(ci<p.length){
+        ci++;out.textContent=p.slice(0,ci);
+        setTimeout(typeNext,60+Math.random()*30-10);
+      }else{setTimeout(eraseNext,2500)}
+    };
+    var eraseNext=function(){
+      if(ci>0){
+        ci--;out.textContent=phrases[pi].slice(0,ci);
+        setTimeout(eraseNext,28);
+      }else{
+        pi=(pi+1)%phrases.length;
+        setTimeout(typeNext,350);
+      }
+    };
+    if(reduce){
+      out.textContent=phrases[0];
+      setInterval(function(){pi=(pi+1)%phrases.length;out.textContent=phrases[pi]},4000);
+    }else{typeNext()}
+  }catch(e){console.error(e)}
+
+  // Live IST clock
+  try{
+    var els=document.querySelectorAll('.js-clock');
+    var fmt=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    var tick=function(){var t=fmt.format(new Date());els.forEach(function(e){e.textContent=t})};
+    tick();setInterval(tick,1000);
+  }catch(e){console.error(e)}
+
+  // Stat count-up
+  try{
+    if(!reduce){
+      var nums=document.querySelectorAll('.stat .n');
+      var start=null,DUR=1200;
+      var fmtN=function(n,v){return (n.dataset.prefix||'')+v.toFixed(+n.dataset.dec)+(n.dataset.suffix||'')};
+      nums.forEach(function(n){n.textContent=fmtN(n,0)});
+      var step=function(ts){
+        if(start===null)start=ts;
+        var p=Math.min((ts-start)/DUR,1),e=1-Math.pow(1-p,3);
+        nums.forEach(function(n){n.textContent=fmtN(n,+n.dataset.to*e)});
+        if(p<1)requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+  }catch(e){console.error(e)}
+
+  // Theme toggle
+  try{
+    var root=document.documentElement;
+    var btn=document.getElementById('themeBtn');
+    var saved=localStorage.getItem('theme');
+    var applyTheme=function(t){
+      if(t==='light'){root.setAttribute('data-theme','light');btn.textContent='●'}
+      else{root.removeAttribute('data-theme');btn.textContent='○'}
+    };
+    applyTheme(saved==='light'?'light':'dark');
+    btn.addEventListener('click',function(){
+      var next=root.getAttribute('data-theme')==='light'?'dark':'light';
+      applyTheme(next);
+      localStorage.setItem('theme',next);
+    });
+  }catch(e){console.error(e)}
+
+  // Section switching (no reload)
+  try{
+    var links=document.querySelectorAll('nav a, .brand');
+    var statusBar=document.querySelector('.status');
+    var logPlayed=false;
+    var playLog=function(){
+      if(logPlayed)return;logPlayed=true;
+      document.querySelectorAll('.tl-entry').forEach(function(el,i){
+        if(reduce){el.style.opacity=1;el.style.transform='none';return}
+        el.style.animationDelay=(i*100)+'ms';
+        el.classList.add('in');
+      });
+    };
+    var show=function(id){
+      var target=document.getElementById(id);
+      if(!target||!target.classList.contains('view'))return false;
+      document.querySelectorAll('.view').forEach(function(v){v.hidden=(v!==target)});
+      document.querySelectorAll('nav a').forEach(function(a){
+        a.classList.toggle('active',a.getAttribute('href')==='#'+id);
+      });
+      if(statusBar)statusBar.hidden=(id!=='home');
+      if(id==='about')playLog();
+      window.scrollTo(0,0);
+      return true;
+    };
+    links.forEach(function(a){a.addEventListener('click',function(ev){
+      ev.preventDefault();
+      var id=a.getAttribute('href').slice(1);
+      if(show(id)&&history.replaceState)history.replaceState(null,'','#'+id);
+    })});
+    document.querySelectorAll('[data-goto]').forEach(function(a){a.addEventListener('click',function(ev){
+      ev.preventDefault();var id=a.dataset.goto;
+      if(show(id)&&history.replaceState)history.replaceState(null,'','#'+id);
+    })});
+    var h=location.hash.slice(1);
+    if(h)show(h);
+  }catch(e){console.error(e)}
+})();
+</script>
+</body>
+</html>
